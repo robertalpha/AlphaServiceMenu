@@ -1,0 +1,21 @@
+.kumservice {
+	height:auto;
+	width:auto;
+}
+
+.container .row {
+     padding-right: 0; /*15px in bootstrap.css*/
+     padding-left: 0;  /*idem*/
+     margin-right: auto;
+     margin-left: auto;
+}
+
+.container {
+    padding-top: 15px;
+}
+
+.loader {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+}

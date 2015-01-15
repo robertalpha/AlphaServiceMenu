@@ -1,0 +1,11 @@
+<div class="container">
+      <ul class="row">
+        <li class="col-lg-2 col-md-2 col-sm-3 col-xs-6 thumbnail" ng-repeat="serv in servies | filter:query">
+          <a type="button" ng-class="getClass(serv)" ng-href="{{serv.ref}}" target="_self">
+            <img ng-src="img/{{serv.icon}}" class="img-responsive col-xs-12"/>
+          </a>
+          <div id="{{serv.servicename}}-status" ng-hide="serv.loaded"><div class="loader"><img ng-src="img/loading.gif" /></div></div>
+        </li>
+      </ul>
+  </div>
+</div>

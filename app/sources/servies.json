@@ -1,0 +1,15 @@
+[
+{"servicename":"plexmediaserver","ref":"http://192.168.1.44:32400/web","title":"Plex","icon":"plex.png"},
+{"servicename":"transmission","ref":"http://192.168.1.44:9091/","title":"Transmission","icon":"transmission.png"},
+{"servicename":"httpd","ref":"angular/","title":"MotionWeb","icon":"camera.png"},
+{"servicename":"sickbeard","ref":"http://192.168.1.44:8081/","title":"Sickbeard","icon":"sick.png"},
+{"servicename":"sabnzbd","ref":"http://192.168.1.44:8080/sabnzbd/","title":"Sabnzbd","icon":"sab.png"},
+{"servicename":"teamspeak3-server","ref":"http://www.tsviewer.com/index.php?page=ts_viewer&ID=972489","title":"Icinga","icon":"teamspeak.png"},
+{"servicename":"httpd","ref":"/icinga-web/","title":"Icinga","icon":"icinga.jpg"},
+{"servicename":"murmur","ref":"#","title":"Murmur","icon":"mumble.png"},
+{"servicename":"bstync","ref":"http://192.168.1.44:8888/","title":"Bittorrent Sync","icon":"bittorrentsync.png"},
+{"servicename":"nzbmegasearch","ref":"http://192.168.1.44:5000/","title":"NZBMegaSearch","icon":"nzbmegasearch.png"},
+{"servicename":"httpd","ref":"http:/192.168.1.44/monitorix/cgi/monitorix.cgi?mode=localhost&graph=all&when=3week&color=black","title":"Monitorix","icon":"monitorix.png"},
+{"servicename":"jboss-as","ref":"http://192.168.1.44:9990/","title":"JBoss Application Server","icon":"redhat.png"},
+{"servicename":"httpd","ref":"http://192.168.1.44/flits","title":"FlitsDex","icon":"speed.png"}
+]
