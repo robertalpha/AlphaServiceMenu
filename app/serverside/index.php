@@ -1,18 +1,21 @@
 <?php
 
-$whitelist = array(
-	"sabnzbd",
-	"sickbeard",
-	"httpd",
-	"transmission",
-	"teamspeak3-server",
-	"plexmediaserver",
-	"btsync",
-	"nzbmegasearch",
-	"murmur",
-	"jboss-as"
-	);
+// Reads allowed servicenames from servies.json
+$json = file_get_contents("../sources/servies.json");
+$jsonIterator = new RecursiveIteratorIterator(
+    new RecursiveArrayIterator(json_decode($json, TRUE)),
+    RecursiveIteratorIterator::SELF_FIRST);
 
+$whitelist = array();
+foreach ($jsonIterator as $key => $val) {
+    if(!is_array($val)) {
+		if($key == "servicename"){
+			$whitelist[] = $val;
+		}    
+	}
+}
+
+// Checks if the requested service name is allowed and checks service status
 if(isset($_GET["process"])){
 	if(in_array($_GET['process'], $whitelist)){
 		exec("systemctl status --output=json ".$_GET["process"], $output, $return);
