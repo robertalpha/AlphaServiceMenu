@@ -1,12 +1,22 @@
 <?php
 
-$whitelist = array(
-	"transmission-daemon",
-	"monitorix",
-	"fail2ban"
-	);
 $platform = "init.d";
+// Reads allowed servicenames from servies.json
+$json = file_get_contents("../sources/servies.json");
+$jsonIterator = new RecursiveIteratorIterator(
+    new RecursiveArrayIterator(json_decode($json, TRUE)),
+    RecursiveIteratorIterator::SELF_FIRST);
 
+$whitelist = array();
+foreach ($jsonIterator as $key => $val) {
+    if(!is_array($val)) {
+		if($key == "servicename"){
+			$whitelist[] = $val;
+		}    
+	}
+}
+
+// Checks if the requested service name is allowed and checks service status
 if(isset($_GET["process"])){
   if(in_array($_GET['process'], $whitelist)){
     exec(sprintf(getCommand(),$_GET["process"]), $output, $return);
