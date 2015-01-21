@@ -23,12 +23,11 @@ kumuControllers.controller('ListController', ['$scope', '$interval', '$q', '$htt
             $scope.servies[key].active = false;
 
             Server.fetch(value.servicename).then(function(data) {
-                var response = data[2];
                 $scope.servies[key].loaded = true;
-                if (response.indexOf("Active: active (running) since") > -1) {
+                if ("running" == data[0]) {
                     $scope.servies[key].active = true;
                 }
-                $scope.servies[key].response = response;
+                $scope.servies[key].response = data[1];
             });
         }
 
