@@ -1,31 +1,18 @@
 <?php
-
-$platform = "init.d";
-// Reads allowed servicenames from servies.json
-$json = file_get_contents("../sources/servies.json");
-$jsonIterator = new RecursiveIteratorIterator(
-    new RecursiveArrayIterator(json_decode($json, TRUE)),
-    RecursiveIteratorIterator::SELF_FIRST);
-
-$whitelist = array();
-foreach ($jsonIterator as $key => $val) {
-    if(!is_array($val)) {
-		if($key == "servicename"){
-			$whitelist[] = $val;
-		}    
-	}
-}
+require("config.php");
 
 // Checks if the requested service name is allowed and checks service status
 if(isset($_GET["process"])){
-  if(in_array($_GET['process'], $whitelist)){
-    exec(sprintf(getCommand(),$_GET["process"]), $output, $return);
+  if(in_array($_GET['process'], $servicelist)){
+    exec(sprintf(getCommand(),$services[$_GET["process"]]["service"]), $output, $return);
     $status = determineStatus($output);
     $result = Array($status, $output);
     echo json_encode($result);
-  } else {
+    } else {
     echo "ILLEGAL ARGUMENT";
   }
+} else if(isset($_GET["request"]) && $_GET['request']=="config"){
+  echo formattedConfig($services,$servicelist,$hosts);
 } else {
   echo "NO PROCESS ARGUMENT PROVIDED";
 }
@@ -43,6 +30,25 @@ function determineStatus($output) {
       return "running";
   }
   return "unknown";
+}
+
+function formattedConfig($serviceconfigs,$servicenames,$hosts) {
+  $result = array();
+  $services = array();
+  foreach ($servicenames as $key => $name) {
+    if($serviceconfigs[$name]!=null){
+      $row = array();
+      $row["servicename"] = $name;
+      $def = $serviceconfigs[$name];
+      $row["url"] = $def["url"];
+      $row["title"] = $def["title"];
+      $row["host"] =  $def["host"];
+      $services[]=$row;
+    }
+  }
+  $result['services'] = $services;
+  $result['hosts'] = $hosts;
+  return json_encode($result);
 }
 
 function getCommand() {

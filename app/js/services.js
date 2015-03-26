@@ -11,7 +11,7 @@ kumuServices.factory('Servicelisting', function($q, $timeout, $http) {
             var deferred = $q.defer();
 
             $timeout(function() {
-                $http.get('sources/servies.json').success(function(data) {
+                $http.get('server/?request=config').success(function(data) {
                     deferred.resolve(data);
                 });
             }, 0);
@@ -22,14 +22,17 @@ kumuServices.factory('Servicelisting', function($q, $timeout, $http) {
     return Servicelisting;
 }).factory('Server', function($q, $timeout, $http) {
     var Output = {
-        fetch: function($servicename) {
+        fetch: function($service,$hostbase) {
 
             var deferred = $q.defer();
 
             $timeout(function() {
-                $http.get('serverside/?process='+$servicename).success(function(data) {
+                $http.get($hostbase+'/server/?process='+$service).success(function(data) {
                     deferred.resolve(data);
-                });
+                }).error(function(data, status, headers, config) {
+                    var response = {running:"server down"};
+                    deferred.resolve(response);
+                  });
             }, 0);
 
             return deferred.promise;

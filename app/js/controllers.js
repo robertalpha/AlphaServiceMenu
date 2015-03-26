@@ -22,7 +22,9 @@ kumuControllers.controller('ListController', ['$scope', '$interval', '$q', '$htt
             $scope.servies[key].loaded = false;
             $scope.servies[key].active = false;
 
-            Server.fetch(value.servicename).then(function(data) {
+            var hostbase = $scope.hosts[value.host];
+
+            Server.fetch(value.servicename,hostbase).then(function(data) {
                 $scope.servies[key].loaded = true;
                 if ("running" == data[0]) {
                     $scope.servies[key].active = true;
@@ -32,7 +34,8 @@ kumuControllers.controller('ListController', ['$scope', '$interval', '$q', '$htt
         }
 
         Servicelisting.fetch().then(function(data) {
-            $scope.servies = data;
+            $scope.servies = data['services'];
+            $scope.hosts = data['hosts'];
 
         }).then(function() {
             angular.forEach($scope.servies, function(value, key) {
